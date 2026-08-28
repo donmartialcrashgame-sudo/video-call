@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VideoCall Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*{box-sizing:border-box;font-family:Arial,sans-serif}
+body{margin:0;background:#f4f7fb;color:#1f2937}
+.loader{position:fixed;inset:0;background:white;display:flex;align-items:center;justify-content:center;z-index:99}
+.spinner{width:45px;height:45px;border:5px solid #ddd;border-top-color:#2563eb;border-radius:50%;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sidebar{position:fixed;left:0;top:0;height:100vh;width:250px;background:#111827;color:white;padding:25px}
+.logo{font-size:24px;font-weight:bold;margin-bottom:30px}.menu a{display:block;color:white;text-decoration:none;padding:14px;border-radius:10px;margin:8px 0}.menu a:hover{background:#2563eb}
+.main{margin-left:250px;padding:30px}.top{display:flex;justify-content:space-between;align-items:center}.profile{background:white;padding:15px;border-radius:15px;display:flex;gap:15px;align-items:center}.avatar{width:55px;height:55px;border-radius:50%;background:#2563eb;color:white;display:flex;align-items:center;justify-content:center;font-size:22px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:30px}.card{background:white;padding:25px;border-radius:20px;box-shadow:0 5px 20px #0001}.card i{font-size:35px;color:#2563eb}.announcement{margin-top:30px;background:white;padding:25px;border-radius:20px}.official{color:#2563eb;font-weight:bold}
+button{border:0;background:#2563eb;color:white;padding:12px 20px;border-radius:10px;cursor:pointer}
+@media(max-width:700px){.sidebar{display:none}.main{margin:0;padding:15px}.mobile{display:flex!important}}
+.mobile{display:none;position:fixed;bottom:0;left:0;right:0;background:white;justify-content:space-around;padding:15px}
+</style>
+</head>
+<body>
+<div class="loader" id="loader"><div class="spinner"></div></div>
+<aside class="sidebar">
+<div class="logo"><i class="fa-solid fa-video"></i> VideoCall</div>
+<div class="menu">
+<a href="dashboard.html"><i class="fa fa-home"></i> Dashboard</a>
+<a href="chat.html"><i class="fa fa-comments"></i> Messages</a>
+<a href="contacts.html"><i class="fa fa-users"></i> Contacts</a>
+<a href="voice-call.html"><i class="fa fa-phone"></i> Voice Calls</a>
+<a href="video-call.html"><i class="fa fa-video"></i> Video Calls</a>
+<a href="settings.html"><i class="fa fa-gear"></i> Settings</a>
+</div>
+</aside>
+<main class="main">
+<div class="top">
+<h1>Welcome back 👋</h1>
+<div class="profile"><div class="avatar" id="avatar">U</div><div><b id="name">Loading...</b><br><small id="email"></small></div></div>
+</div>
+<section class="cards">
+<div class="card"><i class="fa fa-video"></i><h3>Video Call</h3><button>Start</button></div>
+<div class="card"><i class="fa fa-phone"></i><h3>Voice Call</h3><button>Start</button></div>
+<div class="card"><i class="fa fa-message"></i><h3>Messages</h3><button>Open</button></div>
+<div class="card"><i class="fa fa-user-plus"></i><h3>Add Contact</h3><button>Search</button></div>
+</section>
+<section class="announcement">
+<div class="official"><i class="fa fa-circle-check"></i> VideoCall Official</div>
+<h2>Welcome to VideoCall</h2>
+<p>Thanks for joining. You can now chat, make voice calls and video calls.</p>
+<p>🔒 Replies disabled</p>
+</section>
+</main>
+<nav class="mobile">
+<i class="fa fa-home"></i><i class="fa fa-message"></i><i class="fa fa-phone"></i><i class="fa fa-user"></i>
+</nav>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase.js"></script>
+<script>
+(async()=>{const {data}=await supabaseClient.auth.getUser();if(!data.user){location.href='login.html';return;}const u=data.user;document.getElementById('email').textContent=u.email;document.getElementById('name').textContent=u.user_metadata?.full_name||'User';document.getElementById('avatar').textContent=(u.user_metadata?.full_name||'U')[0].toUpperCase();document.getElementById('loader').style.display='none';})();
+</script>
+</body>
+</html>
