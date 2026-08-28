@@ -1,7 +1,6 @@
-// Frontend configuration for the separate signaling backend.
-// Change this URL after deploying your Node.js/Socket.IO backend on Render.
+// Frontend configuration for the separate Node.js/Socket.IO signaling backend.
 window.APP_CONFIG = {
-  BACKEND_URL: window.BACKEND_URL || 'http://localhost:3000'
+  BACKEND_URL: 'https://video-call-app-1dav.onrender.com'
 };
 
 window.getBackendUrl = function () {
