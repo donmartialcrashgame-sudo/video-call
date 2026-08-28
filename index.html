@@ -2,8 +2,9 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VideoCall</title><link rel="stylesheet" href="css/style.css"></head>
 <body>
-<header class="topbar"><div class="brand"><span class="brand-icon">◉</span>VideoCall</div><span class="status"><i></i> Private calls</span></header>
-<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • ONE-TO-ONE • WEBRTC</p><h1>Connect face to face.</h1><p class="subtitle">Choose video or voice, allow the required permission, then share the generated call code.</p>
+<header class="topbar"><div class="brand"><span class="brand-icon">◉</span>VideoCall</div><span id="authStatus" class="status"><i></i> Not signed in</span></header>
+<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • ONE-TO-ONE • WEBRTC • SUPABASE</p><h1>Connect face to face.</h1><p class="subtitle">Choose video or voice, allow the required permission, then share the generated call code.</p>
+<div id="accountNotice" class="permission card" style="margin-bottom:18px"><strong>🔐 Account</strong><span>Connect your Supabase account to use profiles, contacts and chat. Calling still works while we build the account system.</span></div>
 <div class="grid">
 <div class="card"><div class="card-icon">📹</div><h2>Video Call</h2><p>Camera and microphone. Start a private video conversation.</p><button id="videoButton" class="primary wide" type="button">Start Video Call</button></div>
 <div class="card"><div class="card-icon">📞</div><h2>Voice Call</h2><p>Microphone only. Start a private voice conversation without video.</p><button id="voiceButton" class="primary wide" type="button">Start Voice Call</button></div>
@@ -11,6 +12,8 @@
 </div>
 <div class="permission card"><strong>🔐 Permission</strong><span>Video calls request camera + microphone. Voice calls request microphone only.</span></div>
 </section></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="js/supabase.js"></script>
 <script src="js/app.js"></script><script>
 (()=>{
  const $=id=>document.getElementById(id);
@@ -19,5 +22,10 @@
  $('joinCode').oninput=e=>e.target.value=e.target.value.replace(/\D/g,'').slice(0,6);
  function join(type){const code=$('joinCode').value.trim();if(code.length!==6){$('joinMessage').textContent='Enter the 6-digit call code.';return;}location.href='call.html?code='+encodeURIComponent(code)+'&role=guest&type='+type;}
  $('joinVideo').onclick=()=>join('video'); $('joinVoice').onclick=()=>join('audio');
+ async function updateAccount(user){
+   if(user){ $('authStatus').innerHTML='<i></i> '+(user.email || 'Signed in'); $('accountNotice').innerHTML='<strong>✓ Account connected</strong><span>'+((user.email || '').replace(/</g,'&lt;'))+' is connected to Supabase. Your profile is ready for the next chat/contact features.</span>'; await window.VideoCallAuth.ensureProfile(user); }
+ }
+ window.addEventListener('videocall-auth-changed', e=>updateAccount(e.detail.user));
+ window.VideoCallAuth.getUser().then(updateAccount);
 })();
 </script></body></html>
