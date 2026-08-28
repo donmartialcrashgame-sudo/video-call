@@ -1,35 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>VideoApp</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 <div id="appLoader" class="app-loader"><div class="loader-content"><i class="fa-solid fa-video"></i><h2>VideoApp</h2><div class="loading-bar"><span></span></div><p>Loading...</p></div></div>
 <div class="app-layout">
-<section class="chat-panel">
-<header class="desktop-header"><h2><i class="fa-solid fa-video"></i> VideoApp</h2><button><i class="fa-solid fa-camera"></i></button></header>
-<div class="search-box"><i class="fa-solid fa-search"></i><input placeholder="Search or start a new chat"></div>
-<div class="filters"><button>All</button><button>Unread</button><button>Groups</button></div>
+<section class="chat-panel" id="chatPanel">
+<header class="desktop-header"><h2><i class="fa-solid fa-video"></i> VideoApp</h2><button type="button"><i class="fa-solid fa-camera"></i></button></header>
+<div class="search-box"><i class="fa-solid fa-search"></i><input id="chatSearch" type="search" placeholder="Search or start a new chat" autocomplete="off"></div>
+<div class="filters"><button type="button" class="active">All</button><button type="button">Unread</button><button type="button">Groups</button></div>
 <div id="chatList" class="chat-list"></div>
 </section>
-<section class="conversation">
-<div class="chat-header">
-<div class="avatar">V</div>
-<div class="user-title"><h3>VideoApp Official ✓</h3><span>Online</span></div>
-<div class="call-actions"><button><i class="fa-solid fa-phone"></i></button><button><i class="fa-solid fa-video"></i></button><button><i class="fa-solid fa-ellipsis"></i></button></div>
-</div>
-<div id="messagesArea" class="messages-area"><div class="empty-chat"><i class="fa-solid fa-comments"></i><h3>No messages yet</h3><p>Start a conversation with VideoApp Official</p></div></div>
-<div class="message-input"><button><i class="fa-solid fa-paperclip"></i></button><input id="messageInput" placeholder="Type a message..."><button id="sendMessage"><i class="fa-solid fa-paper-plane"></i></button></div>
-</section>
-</div>
-<nav class="bottom-nav"><a><i class="fa-solid fa-message"></i>Chats</a><a><i class="fa-solid fa-phone"></i>Calls</a><a><i class="fa-solid fa-users"></i>Contacts</a><a><i class="fa-solid fa-user"></i>Me</a></nav>
-<div id="popup" class="popup"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/supabase.js"></script>
-<script src="js/dashboard.js"></script>
-</body>
-</html>
+<section class="conversation" id="conversation">
+<div class="chat-header"><button type="button" id="mobileBack" class="mobile-back" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button><div class="avatar" id="chatAvatar">V</div><div class="user-title"><h3>VideoApp Official ✓</h3><span>Online</span></div><div class="call-actions"><button type="button"><i class="fa-solid fa-phone"></i></button><button type="button"><i class="fa-solid fa-video"></i></button><button type="button"><i class="fa-solid fa-ellipsis-vertical"></i></button></div></div>
+<div id="messagesArea" class="messages-area"><div class="empty-chat"><div class="empty-chat-icon"><i class="fa-solid fa-comments"></i></div><h3>No messages yet</h3><p>Start a conversation with VideoApp Official</p></div></div>
+<form id="messageForm" class="message-input" autocomplete="off"><button type="button" aria-label="Attach"><i class="fa-solid fa-paperclip"></i></button><input id="messageInput" type="text" placeholder="Type a message..." maxlength="4000"><button id="sendMessage" type="submit" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button></form>
+</section></div>
+<nav class="bottom-nav"><a href="#" class="active"><i class="fa-solid fa-message"></i><span>Chats</span></a><a href="#"><i class="fa-solid fa-phone"></i><span>Calls</span></a><a href="#"><i class="fa-solid fa-users"></i><span>Contacts</span></a><a href="#"><i class="fa-solid fa-user"></i><span>Me</span></a></nav>
+<div id="popup" class="popup" role="status" aria-live="polite"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/dashboard.js"></script>
+</body></html>
