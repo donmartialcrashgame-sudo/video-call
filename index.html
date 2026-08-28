@@ -2,33 +2,19 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VideoCall</title><link rel="stylesheet" href="css/style.css"></head>
 <body>
-<header class="topbar"><div class="brand"><span class="brand-icon">◉</span>VideoCall</div><span id="status" class="status"><i></i> Connecting</span></header>
-<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • ONE-TO-ONE • WEBRTC</p><h1>Connect face to face.</h1><p class="subtitle">Start a private call, allow your camera, then share the code.</p>
+<header class="topbar"><div class="brand"><span class="brand-icon">◉</span>VideoCall</div><span class="status"><i></i> Private calls</span></header>
+<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • ONE-TO-ONE • WEBRTC</p><h1>Connect face to face.</h1><p class="subtitle">Start a private video call, allow your camera and microphone, then share the generated code.</p>
 <div class="grid">
-<div class="card"><div class="card-icon">📹</div><h2>Start a call</h2><p>Create a private room. The next screen will request camera and microphone access.</p><button id="createButton" class="primary wide" type="button">Start Video Call</button><p id="createMessage" class="hint"></p></div>
+<div class="card"><div class="card-icon">📹</div><h2>Start a call</h2><p>We'll ask for camera and microphone permission on the call screen, then generate your private code.</p><button id="createButton" class="primary wide" type="button">Start Video Call</button></div>
 <div class="card"><div class="card-icon">🔢</div><h2>Join a call</h2><p>Enter the 6-digit code shared by the other person.</p><input id="joinCode" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="off"><button id="joinButton" class="secondary wide" type="button">Join Call</button><p id="joinMessage" class="hint"></p></div>
 </div>
-<div class="permission card"><strong>🔐 Permission</strong><span>Your browser asks for camera and microphone access only when you enter a call.</span></div>
+<div class="permission card"><strong>🔐 Permission</strong><span>Your browser will ask for camera and microphone access after you start or join a call.</span></div>
 </section></main>
-<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script><script src="js/app.js"></script>
-<script>
+<script src="js/app.js"></script><script>
 (()=>{
- const socket=createSocket(); const $=id=>document.getElementById(id); let ready=false;
- const status=t=>$('status').innerHTML='<i></i> '+t;
- socket.on('connect',()=>{ready=true;status('Connected')}); socket.on('disconnect',()=>{ready=false;status('Disconnected')}); socket.on('connect_error',()=>{ready=false;status('Backend unavailable')});
- $('createButton').onclick=()=>{
-  if(!ready){$('createMessage').textContent='Connecting to the calling server…';return;}
-  $('createButton').disabled=true;$('createMessage').textContent='Creating your private call…';
-  socket.emit('create-room',{},r=>{
-   if(!r?.success){$('createButton').disabled=false;$('createMessage').textContent=r?.message||'Could not create the call.';return;}
-   sessionStorage.setItem('callCode',r.code); window.location.href='call.html?code='+encodeURIComponent(r.code)+'&role=host&type=video';
-  });
- };
+ const $=id=>document.getElementById(id);
+ $('createButton').onclick=()=>{location.href='call.html?role=host&type=video';};
  $('joinCode').oninput=e=>e.target.value=e.target.value.replace(/\D/g,'').slice(0,6);
- $('joinButton').onclick=()=>{
-  const code=$('joinCode').value.trim(); if(code.length!==6){$('joinMessage').textContent='Enter the 6-digit call code.';return;} if(!ready){$('joinMessage').textContent='Connecting to the calling server…';return;}
-  $('joinButton').disabled=true;$('joinMessage').textContent='Checking code…';
-  socket.emit('check-room',{code},r=>{if(!r?.success){$('joinButton').disabled=false;$('joinMessage').textContent=r?.message||'Call code not found.';return;}window.location.href='call.html?code='+encodeURIComponent(code)+'&role=guest&type=video'});
- };
+ $('joinButton').onclick=()=>{const code=$('joinCode').value.trim();if(code.length!==6){$('joinMessage').textContent='Enter the 6-digit call code.';return;}location.href='call.html?code='+encodeURIComponent(code)+'&role=guest&type=video';};
 })();
 </script></body></html>
