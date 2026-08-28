@@ -8,59 +8,37 @@
 <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
-<div id="appLoader" class="app-loader">
-  <div class="loader-content">
-    <i class="fa-solid fa-video"></i>
-    <h2>VideoApp</h2>
-    <div class="loading-bar"><span></span></div>
-    <p>Loading...</p>
-  </div>
-</div>
-
-<header class="mobile-header">
-  <div><i class="fa-solid fa-video"></i> VideoApp</div>
-  <button><i class="fa-solid fa-camera"></i></button>
-</header>
+<div id="appLoader" class="app-loader"><div class="loader-content"><i class="fa-solid fa-video"></i><h2>VideoApp</h2><div class="loading-bar"><span></span></div><p>Loading...</p></div></div>
 
 <div class="app-layout">
 <section class="chat-panel">
-<header class="desktop-header">
-  <h2><i class="fa-solid fa-video"></i> VideoApp</h2>
-  <button><i class="fa-solid fa-camera"></i></button>
-</header>
-
-<div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Search chats, contacts..."></div>
-
-<div class="filters">
-<button>All</button><button>Unread</button><button>Groups</button>
-</div>
-
-<div class="chat-list" id="chatList">
-<div class="skeleton"></div>
-<div class="skeleton"></div>
-<div class="skeleton"></div>
-</div>
+<header class="desktop-header"><h2><i class="fa-solid fa-video"></i> VideoApp</h2><button><i class="fa-solid fa-camera"></i></button></header>
+<div class="search-box"><i class="fa-solid fa-magnifying-glass"></i><input placeholder="Search or start a new chat"></div>
+<div class="filters"><button>All</button><button>Unread</button><button>Groups</button></div>
+<div class="chat-list" id="chatList"></div>
 </section>
 
 <section class="conversation">
-<div class="empty-chat">
-<i class="fa-solid fa-comments"></i>
-<h2>VideoApp Messages</h2>
-<p>Select a conversation to start chatting</p>
+<header class="chat-header">
+<div class="avatar">V</div>
+<div><h3>VideoApp Official ✓</h3><p>Online</p></div>
+<div class="call-actions"><button><i class="fa-solid fa-phone"></i></button><button><i class="fa-solid fa-video"></i></button></div>
+</header>
+
+<div class="messages-area" id="messagesArea">
+<div class="empty-chat"><i class="fa-solid fa-comments"></i><h2>No messages yet</h2><p>Start a conversation with VideoApp Official</p></div>
+</div>
+
+<div class="message-input">
+<button><i class="fa-solid fa-paperclip"></i></button>
+<input id="messageInput" placeholder="Type a message...">
+<button id="sendMessage"><i class="fa-solid fa-paper-plane"></i></button>
 </div>
 </section>
 </div>
 
-<nav class="bottom-nav">
-<a><i class="fa-solid fa-house"></i>Home</a>
-<a href="chat.html"><i class="fa-solid fa-message"></i>Chats</a>
-<a href="voice-call.html"><i class="fa-solid fa-phone"></i>Calls</a>
-<a href="contacts.html"><i class="fa-solid fa-users"></i>Contacts</a>
-<a><i class="fa-solid fa-user"></i>Me</a>
-</nav>
-
+<nav class="bottom-nav"><a><i class="fa-solid fa-message"></i>Chats</a><a><i class="fa-solid fa-phone"></i>Calls</a><a><i class="fa-solid fa-users"></i>Contacts</a><a><i class="fa-solid fa-user"></i>Me</a></nav>
 <div id="popup" class="popup"></div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase.js"></script>
 <script src="js/dashboard.js"></script>
