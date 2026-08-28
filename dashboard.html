@@ -3,23 +3,26 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>VideoApp</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><link rel="stylesheet" href="css/dashboard.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
 <div id="appLoader" class="app-loader"><div class="loader-content"><i class="fa-solid fa-video"></i><h2>VideoApp</h2><div class="loading-bar"><span></span></div><p>Loading...</p></div></div>
 <div class="app-layout">
 <section class="chat-panel" id="chatPanel">
-<header class="desktop-header"><h2><i class="fa-solid fa-video"></i> VideoApp</h2><button type="button"><i class="fa-solid fa-camera"></i></button></header>
+<header class="desktop-header"><h2><i class="fa-solid fa-video"></i> VideoApp</h2><div class="header-actions"><button type="button" aria-label="Camera"><i class="fa-solid fa-camera"></i></button><button type="button" aria-label="Menu"><i class="fa-solid fa-ellipsis-vertical"></i></button></div></header>
 <div class="search-box"><i class="fa-solid fa-search"></i><input id="chatSearch" type="search" placeholder="Search or start a new chat" autocomplete="off"></div>
 <div class="filters"><button type="button" class="active">All</button><button type="button">Unread</button><button type="button">Groups</button></div>
 <div id="chatList" class="chat-list"></div>
 </section>
 <section class="conversation" id="conversation">
-<div class="chat-header"><button type="button" id="mobileBack" class="mobile-back" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button><div class="avatar" id="chatAvatar">V</div><div class="user-title"><h3>VideoApp Official ✓</h3><span>Online</span></div><div class="call-actions"><button type="button"><i class="fa-solid fa-phone"></i></button><button type="button"><i class="fa-solid fa-video"></i></button><button type="button"><i class="fa-solid fa-ellipsis-vertical"></i></button></div></div>
+<div class="chat-header"><button type="button" id="mobileBack" class="mobile-back" aria-label="Back"><i class="fa-solid fa-arrow-left"></i></button><div class="avatar official" id="chatAvatar"><i class="fa-solid fa-video"></i></div><div class="user-title"><h3 id="chatTitle">VideoApp Official ✓</h3><span id="chatStatus">Online</span></div><div class="call-actions"><button type="button" aria-label="Voice call"><i class="fa-solid fa-phone"></i></button><button type="button" aria-label="Video call"><i class="fa-solid fa-video"></i></button><button type="button" aria-label="More"><i class="fa-solid fa-ellipsis-vertical"></i></button></div></div>
 <div id="messagesArea" class="messages-area"><div class="empty-chat"><div class="empty-chat-icon"><i class="fa-solid fa-comments"></i></div><h3>No messages yet</h3><p>Start a conversation with VideoApp Official</p></div></div>
 <form id="messageForm" class="message-input" autocomplete="off"><button type="button" aria-label="Attach"><i class="fa-solid fa-paperclip"></i></button><input id="messageInput" type="text" placeholder="Type a message..." maxlength="4000"><button id="sendMessage" type="submit" aria-label="Send"><i class="fa-solid fa-paper-plane"></i></button></form>
 </section></div>
-<nav class="bottom-nav"><a href="#" class="active"><i class="fa-solid fa-message"></i><span>Chats</span></a><a href="#"><i class="fa-solid fa-phone"></i><span>Calls</span></a><a href="#"><i class="fa-solid fa-users"></i><span>Contacts</span></a><a href="#"><i class="fa-solid fa-user"></i><span>Me</span></a></nav>
+<button id="newChatButton" class="new-chat-button" type="button" aria-label="New chat"><i class="fa-solid fa-plus"></i></button>
+<nav class="bottom-nav"><a href="dashboard.html" class="active"><i class="fa-solid fa-message"></i><span>Chats</span></a><a href="#"><i class="fa-solid fa-phone"></i><span>Calls</span></a><a href="contact.html"><i class="fa-solid fa-users"></i><span>Contacts</span></a><a href="#"><i class="fa-solid fa-user"></i><span>Me</span></a></nav>
 <div id="popup" class="popup" role="status" aria-live="polite"></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="js/supabase.js"></script><script src="js/dashboard.js"></script><script src="js/realtime-notifications.js"></script><script src="js/official-logo.js"></script>
+<script>document.getElementById('newChatButton')?.addEventListener('click',()=>location.href='contact.html');</script>
 </body></html>
