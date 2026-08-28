@@ -3,18 +3,21 @@
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VideoCall</title><link rel="stylesheet" href="css/style.css"></head>
 <body>
 <header class="topbar"><div class="brand"><span class="brand-icon">◉</span>VideoCall</div><span class="status"><i></i> Private calls</span></header>
-<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • ONE-TO-ONE • WEBRTC</p><h1>Connect face to face.</h1><p class="subtitle">Start a private video call, allow your camera and microphone, then share the generated code.</p>
+<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • ONE-TO-ONE • WEBRTC</p><h1>Connect face to face.</h1><p class="subtitle">Choose video or voice, allow the required permission, then share the generated call code.</p>
 <div class="grid">
-<div class="card"><div class="card-icon">📹</div><h2>Start a call</h2><p>We'll ask for camera and microphone permission on the call screen, then generate your private code.</p><button id="createButton" class="primary wide" type="button">Start Video Call</button></div>
-<div class="card"><div class="card-icon">🔢</div><h2>Join a call</h2><p>Enter the 6-digit code shared by the other person.</p><input id="joinCode" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="off"><button id="joinButton" class="secondary wide" type="button">Join Call</button><p id="joinMessage" class="hint"></p></div>
+<div class="card"><div class="card-icon">📹</div><h2>Video Call</h2><p>Camera and microphone. Start a private video conversation.</p><button id="videoButton" class="primary wide" type="button">Start Video Call</button></div>
+<div class="card"><div class="card-icon">📞</div><h2>Voice Call</h2><p>Microphone only. Start a private voice conversation without video.</p><button id="voiceButton" class="primary wide" type="button">Start Voice Call</button></div>
+<div class="card"><div class="card-icon">🔢</div><h2>Join a Call</h2><p>Enter the 6-digit code shared by the other person.</p><input id="joinCode" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="off"><div style="display:flex;gap:10px;margin-top:2px"><button id="joinVideo" class="secondary" type="button" style="flex:1">Join Video</button><button id="joinVoice" class="secondary" type="button" style="flex:1">Join Voice</button></div><p id="joinMessage" class="hint"></p></div>
 </div>
-<div class="permission card"><strong>🔐 Permission</strong><span>Your browser will ask for camera and microphone access after you start or join a call.</span></div>
+<div class="permission card"><strong>🔐 Permission</strong><span>Video calls request camera + microphone. Voice calls request microphone only.</span></div>
 </section></main>
 <script src="js/app.js"></script><script>
 (()=>{
  const $=id=>document.getElementById(id);
- $('createButton').onclick=()=>{location.href='call.html?role=host&type=video';};
+ const start=type=>location.href='call.html?role=host&type='+type;
+ $('videoButton').onclick=()=>start('video'); $('voiceButton').onclick=()=>start('audio');
  $('joinCode').oninput=e=>e.target.value=e.target.value.replace(/\D/g,'').slice(0,6);
- $('joinButton').onclick=()=>{const code=$('joinCode').value.trim();if(code.length!==6){$('joinMessage').textContent='Enter the 6-digit call code.';return;}location.href='call.html?code='+encodeURIComponent(code)+'&role=guest&type=video';};
+ function join(type){const code=$('joinCode').value.trim();if(code.length!==6){$('joinMessage').textContent='Enter the 6-digit call code.';return;}location.href='call.html?code='+encodeURIComponent(code)+'&role=guest&type='+type;}
+ $('joinVideo').onclick=()=>join('video'); $('joinVoice').onclick=()=>join('audio');
 })();
 </script></body></html>
