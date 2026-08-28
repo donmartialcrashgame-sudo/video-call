@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VideoCall</title><link rel="stylesheet" href="css/style.css"></head>
+<body>
+<header class="topbar"><div class="brand"><span class="brand-icon">◉</span><span>VideoCall</span></div><span id="status" class="status"><i></i> Connecting</span></header>
+<main class="home"><section class="hero"><p class="eyebrow">PRIVATE • REAL-TIME • WEBRTC</p><h1>Connect face to face.</h1><p class="subtitle">Start a secure one-to-one video or audio call from your browser.</p>
+<div class="card setup"><label for="userId">Your user ID</label><input id="userId" maxlength="80" placeholder="e.g. don" autocomplete="off"><button id="onlineButton" class="primary" type="button">Go online</button><p id="setupMessage" class="hint">Choose an ID so other users can call you.</p></div>
+<div class="card call-card"><div><span class="label">Call another user</span><h2>Who do you want to call?</h2></div><input id="targetId" maxlength="80" placeholder="Enter user ID" autocomplete="off"><div class="actions"><button id="videoCallButton" class="primary" type="button">📹 Video call</button><button id="audioCallButton" class="secondary" type="button">🎙️ Audio call</button></div></div>
+<div id="incoming" class="incoming hidden"><div class="avatar">☎</div><div class="incoming-copy"><strong id="incomingText">Incoming call</strong><span>Someone is calling you</span></div><button id="acceptButton" class="accept" type="button">Accept</button><button id="rejectButton" class="reject" type="button">Reject</button></div>
+</section></main>
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script><script src="js/app.js"></script>
+<script>
+(() => { const socket=io(getBackendUrl(),{transports:['websocket','polling']}); const $=id=>document.getElementById(id); let incoming=null; let online=false;
+const status=t=>{$('status').innerHTML='<i></i> '+t}; socket.on('connect',()=>status('Connected')); socket.on('disconnect',()=>status('Disconnected')); socket.on('connect_error',()=>status('Backend unavailable'));
+$('userId').value=localStorage.getItem('videoCallUserId')||'';
+$('onlineButton').onclick=()=>{const id=$('userId').value.trim(); if(!id)return $('setupMessage').textContent='Please enter your user ID.'; socket.emit('register',id,r=>{if(r?.success){online=true;localStorage.setItem('videoCallUserId',id);$('onlineButton').textContent='✓ Online';$('onlineButton').disabled=true;$('userId').disabled=true;$('setupMessage').textContent='You are online and ready to receive calls.';}else $('setupMessage').textContent=r?.message||'Could not go online.'})};
+function start(type){if(!online)return $('setupMessage').textContent='Click Go online first.'; const to=$('targetId').value.trim();if(!to)return $('setupMessage').textContent='Enter the user ID you want to call.';localStorage.setItem('videoCallUserId',$('userId').value.trim());location.href='call.html?user='+encodeURIComponent(to)+'&type='+type;}
+$('videoCallButton').onclick=()=>start('video'); $('audioCallButton').onclick=()=>start('audio');
+socket.on('incoming-call',c=>{incoming=c;$('incomingText').textContent=`${c.from} is calling you`;$('incoming').classList.remove('hidden');}); $('acceptButton').onclick=()=>{if(!incoming)return;localStorage.setItem('videoCallUserId',$('userId').value.trim());location.href='call.html?user='+encodeURIComponent(incoming.from)+'&type='+incoming.callType+'&incoming=1'}; $('rejectButton').onclick=()=>{if(incoming)socket.emit('reject-call',{to:incoming.from});incoming=null;$('incoming').classList.add('hidden')};
+})();
+</script></body></html>
