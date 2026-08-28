@@ -1,32 +1,6 @@
 <!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Video Call</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <main class="call-page">
-    <header class="call-header">
-      <div><strong>Video Call</strong><span id="connectionStatus">Connecting…</span></div>
-      <button id="backButton" type="button">Back</button>
-    </header>
-
-    <section class="video-stage">
-      <video id="remoteVideo" autoplay playsinline></video>
-      <div class="local-video-wrap"><video id="localVideo" autoplay muted playsinline></video></div>
-      <div id="callMessage" class="call-message">Ready to call</div>
-    </section>
-
-    <section class="call-controls" aria-label="Call controls">
-      <button id="muteButton" type="button">🎤 Mute</button>
-      <button id="cameraButton" type="button">📷 Camera off</button>
-      <button id="endCallButton" class="danger" type="button">📞 End call</button>
-    </section>
-  </main>
-  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/call.js"></script>
-</body>
-</html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>VideoCall — Call</title><link rel="stylesheet" href="css/style.css"></head>
+<body class="call-body"><main class="call-page"><header class="call-header"><div class="brand"><span class="brand-icon">◉</span> VideoCall</div><div><span id="connectionStatus" class="status"><i></i> Connecting</span><span class="room-pill">Code <strong id="roomCode">------</strong></span></div></header>
+<section class="video-stage"><video id="remoteVideo" autoplay playsinline></video><div id="remotePlaceholder" class="remote-placeholder"><div class="big-icon">👤</div><h2 id="callTitle">Waiting for the other person…</h2><p>Share your 6-digit code with them.</p></div><div class="local-video-wrap"><video id="localVideo" autoplay muted playsinline></video></div><div id="callMessage" class="call-message">Preparing your camera…</div></section>
+<section class="call-controls"><button id="muteButton" type="button">🎤 Mute</button><button id="cameraButton" type="button">📷 Camera off</button><button id="endCallButton" class="danger" type="button">☎ End call</button></section></main>
+<script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script><script src="js/app.js"></script><script src="js/call.js"></script></body></html>
